@@ -1,0 +1,23 @@
+<div class="container">
+  <mat-form-field appearance="fill">
+    <mat-label>Stacja odjazdu</mat-label>
+    <input matInput [(ngModel)]="cityFrom">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Stacja przyjazdu</mat-label>
+    <input matInput [(ngModel)]="cityTo">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Data</mat-label>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <div class="btn">
+    <button mat-raised-button color="primary" (click)="onClickSearch()" [disabled]="!cityFrom || !cityTo">
+      Szukaj połączeń
+    </button>
+  </div>
+  
+</div>
+

@@ -1,0 +1,30 @@
+mat-card {
+  margin-bottom: 1rem;
+  width: 800px
+}
+
+.conn {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.l-txt {
+  font-size: large;
+}
+
+.seats {
+  color:gray;
+}
