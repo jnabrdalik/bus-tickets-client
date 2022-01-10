@@ -14,10 +14,4 @@ export class MyTicketsComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  test() {
-    const token = localStorage.getItem('jwt');
-
-    console.log(token ? JSON.parse(atob(token.split('.')[1])).displayName : null);
-  }
 }
