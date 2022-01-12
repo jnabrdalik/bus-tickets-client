@@ -18,6 +18,7 @@ export class BuyTicketComponent implements OnInit {
   lastName: string;
   user: User;
   journey: Journey;
+  journeyId: string;
   clicked: boolean = false;
 
   constructor(
@@ -32,6 +33,7 @@ export class BuyTicketComponent implements OnInit {
     this.route.queryParams.subscribe(
       params => {
         const journeyId = params['journeyId'];
+        this.journeyId = journeyId;
         this.searchService.getJourney(journeyId).subscribe(
           journey => this.journey = journey
         );
@@ -48,7 +50,7 @@ export class BuyTicketComponent implements OnInit {
 
   buyTicket() {
     this.clicked = true;
-    this.ticketService.buyTicket(this.journey.id, this.firstName, this.lastName).subscribe(
+    this.ticketService.buyTicket(this.journeyId, this.firstName, this.lastName).subscribe(
       _ => this.router.navigate(['ticket-purchased'])
     )
   }
