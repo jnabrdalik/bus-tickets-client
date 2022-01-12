@@ -1,0 +1,45 @@
+.t-container {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  gap: 2rem;
+}
+
+.last-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.date {
+  margin-bottom: 1rem;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.l-txt {
+  font-size: large;
+}
+
+.btn {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-divider {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
