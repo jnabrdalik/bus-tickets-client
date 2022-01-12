@@ -1,26 +1,30 @@
 <app-search-box [cityFrom]="cityFrom" [cityTo]="cityTo" [date]="date"></app-search-box>
 <div class="container">
   <h1>Znalezione połączenia:</h1>
-  <mat-card *ngFor="let c of connections | async">
+  <p *ngIf="journeys?.length === 0">
+    Brak połączeń o podanych parametrach
+  </p>
+  <mat-spinner *ngIf="!loaded"></mat-spinner>
+  <mat-card *ngFor="let j of journeys">
     <div class="conn">
       <div class="row">
         <div class="col">
-          <div class="l-txt"><b>{{c.departureTime | slice:0:5}}</b></div>
-          <div>{{c.stationFrom}}</div>          
+          <div class="l-txt"><b>{{j.departureTime | slice:0:5}}</b></div>
+          <div>{{j.stationFrom}}</div>          
         </div>
         <div class="col">
-          <div class="l-txt"><b>{{c.arrivalTime | slice:0:5 }}</b></div>
-          <div>{{c.stationTo}}</div>
+          <div class="l-txt"><b>{{j.arrivalTime | slice:0:5 }}</b></div>
+          <div>{{j.stationTo}}</div>
         </div>
         <div class="col l-txt">
-          <b>{{c.price}} zł</b>
+          <b>{{j.price}} zł</b>
         </div>
       </div>
       <div class="row">
         <div class="seats">
-          Dostępne miejsca: {{c.availableSeats}}
+          Dostępne miejsca: {{j.availableSeats}}
         </div>
-        <a mat-raised-button color="primary" (click)="onClickBuy(c.id)">
+        <a mat-raised-button color="primary" (click)="onClickBuy(j.id)">
           Kup bilet
         </a>
       </div>

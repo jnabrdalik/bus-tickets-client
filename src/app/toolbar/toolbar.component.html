@@ -1,6 +1,8 @@
-<mat-toolbar color="primary">  
-  <mat-icon>directions_bus</mat-icon>
-  <span>Bilety</span>
+<mat-toolbar color="primary">
+  <a routerLink="" mat-button>
+    <mat-icon>directions_bus</mat-icon>
+    Bilety
+  </a>
   <span class="spacer"></span>  
   <button mat-button [matMenuTriggerFor]="menu" *ngIf="isAuth$ | async">
     <span>{{(currentUser$ | async)?.givenName}} {{(currentUser$ | async)?.familyName}} </span>

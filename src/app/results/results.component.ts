@@ -14,7 +14,8 @@ export class ResultsComponent implements OnInit {
   cityTo: string = '';
   date: Date = new Date();
 
-  connections: Observable<Journey[]>;
+  journeys: Journey[];
+  loaded: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,10 +25,16 @@ export class ResultsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
+      this.loaded = false;
       this.cityFrom = params['from'];
       this.cityTo = params['to'];
       this.date = new Date(Date.parse(params['date']));
-      this.connections = this.searchService.getAllJourneys(params['date'], params['from'], params['to']);
+      this.searchService.getAllJourneys(params['date'], params['from'], params['to']).subscribe(
+        journeys => {
+          this.journeys = journeys;
+          this.loaded = true;
+        }
+      );
     });
   }
 
