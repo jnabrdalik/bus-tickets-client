@@ -3,7 +3,7 @@
   <span>Bilety</span>
   <span class="spacer"></span>  
   <button mat-button [matMenuTriggerFor]="menu" *ngIf="isAuth$ | async">
-    <span>{{(currentUser$ | async)}} </span>
+    <span>{{(currentUser$ | async)?.givenName}} {{(currentUser$ | async)?.familyName}} </span>
     <mat-icon>account_circle</mat-icon>
   </button>
   <mat-menu #menu="matMenu">

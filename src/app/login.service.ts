@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { User } from './model/user';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,8 @@ export class LoginService {
   private isAuth = new BehaviorSubject<boolean>(false);
   isAuth$: Observable<boolean> = this.isAuth.asObservable();
 
-  private currentUser = new BehaviorSubject<string | null>(null);
-  currentUser$: Observable<string | null> = this.currentUser.asObservable();
+  private currentUser = new BehaviorSubject<User>({ givenName: '', familyName: '' });
+  currentUser$: Observable<User> = this.currentUser.asObservable();
 
   constructor(
     private router: Router
@@ -46,12 +47,13 @@ export class LoginService {
   logout(): void {
     localStorage.removeItem('jwt');
     this.isAuth.next(false);
-    this.currentUser.next('');
+    this.currentUser.next({ givenName: '', familyName: '' });
     this.router.navigate(['']);
   }
 
-  private getUsernameFromJwt(jwt: string): string {
-    return jwt ? JSON.parse(atob(jwt.split('.')[1])).displayName : '';
+  private getUsernameFromJwt(jwt: string): User {
+    console.log(jwt)
+    return jwt ? JSON.parse(atob(jwt.split('.')[1])).name : '';
   }
 
 }

@@ -5,12 +5,14 @@ import { BuyTicketComponent } from './buy-ticket/buy-ticket.component';
 import { MyTicketsComponent } from './my-tickets/my-tickets.component';
 import { ResultsComponent } from './results/results.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
+import { TicketPurchasedComponent } from './ticket-purchased/ticket-purchased.component';
 
 const routes: Routes = [
   { path: '', component: SearchBoxComponent },
   { path: 'search', component: ResultsComponent },
   { path: 'buy-ticket', component: BuyTicketComponent, canActivate: [AuthGuard] },
-  { path: 'my-tickets', component: MyTicketsComponent, canActivate: [AuthGuard] }
+  { path: 'my-tickets', component: MyTicketsComponent, canActivate: [AuthGuard] },
+  { path: 'ticket-purchased', component: TicketPurchasedComponent }
 ];
 
 @NgModule({

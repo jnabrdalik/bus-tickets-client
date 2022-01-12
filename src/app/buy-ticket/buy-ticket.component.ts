@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap, Observable, throwIfEmpty } from 'rxjs';
 import { LoginService } from '../login.service';
+import { Journey } from '../model/journey';
+import { User } from '../model/user';
+import { SearchService } from '../search.service';
+import { TicketService } from '../ticket.service';
 
 @Component({
   selector: 'app-buy-ticket',
@@ -9,16 +14,43 @@ import { LoginService } from '../login.service';
 })
 export class BuyTicketComponent implements OnInit {
 
-  journeyId!: number;
+  journeyId: string;
+  firstName: string;
+  lastName: string;
+  user: User;
+  connection$: Observable<Journey>;
+  clicked: boolean = false;
 
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
+    private loginService: LoginService,
+    private searchService: SearchService,
+    private ticketService: TicketService
   ) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.journeyId = params['journeyId'];
-    });
-  } 
+    this.route.queryParams.subscribe(
+      params => {
+        const journeyId = params['journeyId'];
+        this.journeyId = journeyId;
+        this.connection$ = this.searchService.getJourney(journeyId);
+      }
+    );
+
+    this.loginService.currentUser$.subscribe(
+      user => {
+        this.firstName = user.givenName;
+        this.lastName = user.familyName;
+      }
+    )
+  }
+
+  buyTicket() {
+    this.clicked = true;
+    this.ticketService.buyTicket(this.journeyId, this.firstName, this.lastName).subscribe(
+      _ => this.router.navigate(['ticket-purchased'])
+    )
+  }
   
 }

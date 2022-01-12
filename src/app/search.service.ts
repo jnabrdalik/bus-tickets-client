@@ -1,24 +1,35 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { Connection } from './model/connection';
+import { EMPTY, map, Observable, of, tap } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { Journey } from './model/journey';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
 
-  constructor() { }
+  private journeyCache: Journey[] = [];
 
-  private connections: Connection[] = [
-    {
-      journeyId: 1, stationFrom: 'Warszawa', stationTo: 'Kraków', departureTime: '12:00', arrivalTime: '15:00', price: 99.00, availableSeats: 23  
-    },
-    {
-      journeyId: 2, stationFrom: 'Warszawa', stationTo: 'Kraków', departureTime: '15:00', arrivalTime: '18:00', price: 99.00, availableSeats: 12  
-    }
-  ];
+  constructor(
+    private http: HttpClient
+  ) { }
 
-  getConnections(): Observable<Connection[]> {
-    return of(this.connections);
+  getAllJourneys(date: string, from: string, to: string) {
+    return this.http.get<Journey[]>(`${environment.api}/journeys`, {
+      params: { date, from, to }
+    }).pipe(
+      tap(
+        journeys => this.journeyCache = journeys
+      ),
+      map(
+        (results: Journey[]) => results.sort((j1, j2) => j1.departureTime.localeCompare(j2.departureTime))
+      )
+    )
+  }
+
+  getJourney(id: string): Observable<Journey> {
+    const journey = this.journeyCache.find(c => c.id === id);
+    return journey ? of(journey) : EMPTY;
   }
 }

@@ -5,12 +5,11 @@
     <div class="conn">
       <div class="row">
         <div class="col">
-          <div class="l-txt"><b>{{c.departureTime}}</b></div>
-          <div>{{c.stationFrom}}</div>
-          
+          <div class="l-txt"><b>{{c.departureTime | slice:0:5}}</b></div>
+          <div>{{c.stationFrom}}</div>          
         </div>
         <div class="col">
-          <div class="l-txt"><b>{{c.arrivalTime}}</b></div>
+          <div class="l-txt"><b>{{c.arrivalTime | slice:0:5 }}</b></div>
           <div>{{c.stationTo}}</div>
         </div>
         <div class="col l-txt">
@@ -21,8 +20,8 @@
         <div class="seats">
           Dostępne miejsca: {{c.availableSeats}}
         </div>
-        <a mat-raised-button color="primary" (click)="onClickBuy(c.journeyId)">
-          Kup
+        <a mat-raised-button color="primary" (click)="onClickBuy(c.id)">
+          Kup bilet
         </a>
       </div>
     </div>

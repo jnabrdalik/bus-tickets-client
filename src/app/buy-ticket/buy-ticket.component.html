@@ -1,1 +1,37 @@
-<p>buy-ticket works!</p>
+<h2>Dane pasażera</h2>
+<div class="p-container">
+  <mat-form-field appearance="outline">
+    <mat-label>Imię</mat-label>
+    <input matInput [(ngModel)]="firstName">
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Nazwisko</mat-label>
+    <input matInput [(ngModel)]="lastName">
+  </mat-form-field>
+</div>
+<h2>Dane biletu</h2>
+<div class="t-container">
+  <div class="row date">
+    <b>{{(connection$ | async)?.date | date:'dd.MM.yyyy'}}</b>
+  </div>
+  <div class="row">
+    <div>{{(connection$ | async)?.departureTime | slice:0:5}}</div>
+    <div>{{(connection$ | async)?.stationFrom}}</div>
+  </div>
+  <div class="row">
+    <div>{{(connection$ | async)?.arrivalTime | slice:0:5 }}</div>
+    <div>{{(connection$ | async)?.stationTo}}</div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="last-row l-txt">
+    <div>Cena:</div>
+    <div><b>{{(connection$ | async)?.price}} zł</b></div>
+  </div>
+  <div class="btn">
+    <button *ngIf="!clicked" mat-raised-button color="primary" (click)="buyTicket()">
+      Zapłać
+    </button>
+    <mat-spinner *ngIf="clicked"></mat-spinner>
+  </div>
+  
+</div>

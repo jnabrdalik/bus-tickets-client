@@ -14,4 +14,5 @@ export class MyTicketsComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
 }

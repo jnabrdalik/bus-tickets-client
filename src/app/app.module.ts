@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchBoxComponent } from './search-box/search-box.component';
 import { ResultsComponent } from './results/results.component';
@@ -13,6 +13,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { BuyTicketComponent } from './buy-ticket/buy-ticket.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { MyTicketsComponent } from './my-tickets/my-tickets.component';
+import { TokenInterceptor } from './token-interceptor';
+import { TicketPurchasedComponent } from './ticket-purchased/ticket-purchased.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { MyTicketsComponent } from './my-tickets/my-tickets.component';
     ResultsComponent,
     BuyTicketComponent,
     ToolbarComponent,
-    MyTicketsComponent
+    MyTicketsComponent,
+    TicketPurchasedComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +37,11 @@ import { MyTicketsComponent } from './my-tickets/my-tickets.component';
   providers: [
     {
       provide: MAT_DATE_LOCALE, useValue: 'pl-PL'
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
     }
   ],
   bootstrap: [AppComponent]

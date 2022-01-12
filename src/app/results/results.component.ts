@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { Connection } from '../model/connection';
+import { Observable, switchMap } from 'rxjs';
+import { Journey } from '../model/journey';
 import { SearchService } from '../search.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class ResultsComponent implements OnInit {
   cityTo: string = '';
   date: Date = new Date();
 
-  connections: Observable<Connection[]> = this.searchService.getConnections();
+  connections: Observable<Journey[]>;
 
   constructor(
     private route: ActivatedRoute,
@@ -27,20 +27,16 @@ export class ResultsComponent implements OnInit {
       this.cityFrom = params['from'];
       this.cityTo = params['to'];
       this.date = new Date(Date.parse(params['date']));
+      this.connections = this.searchService.getAllJourneys(params['date'], params['from'], params['to']);
     });
   }
 
-  onClickBuy(journeyId: number) {
+  onClickBuy(journeyId: string) {
     this.router.navigate(
       ['buy-ticket'], {
-      queryParams: {
-        journeyId: journeyId
-      }
+      queryParams: { journeyId }
     }
     );
-
   }
-
-
 
 }
