@@ -9,8 +9,6 @@ import { Journey } from './model/journey';
 })
 export class SearchService {
 
-  private journeyCache: Journey[] = [];
-
   constructor(
     private http: HttpClient
   ) { }
@@ -19,9 +17,6 @@ export class SearchService {
     return this.http.get<Journey[]>(`${environment.api}/journeys`, {
       params: { date, from, to }
     }).pipe(
-      tap(
-        journeys => this.journeyCache = journeys
-      ),
       map(
         (results: Journey[]) => results.sort((j1, j2) => j1.departureTime.localeCompare(j2.departureTime))
       )
@@ -29,7 +24,6 @@ export class SearchService {
   }
 
   getJourney(id: string): Observable<Journey> {
-    const journey = this.journeyCache.find(c => c.id === id);
-    return journey ? of(journey) : EMPTY;
+    return this.http.get<Journey>(`${environment.api}/journeys/byId/${id}`);
   }
 }

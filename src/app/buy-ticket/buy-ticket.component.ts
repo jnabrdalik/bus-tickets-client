@@ -14,11 +14,10 @@ import { TicketService } from '../ticket.service';
 })
 export class BuyTicketComponent implements OnInit {
 
-  journeyId: string;
   firstName: string;
   lastName: string;
   user: User;
-  connection$: Observable<Journey>;
+  journey: Journey;
   clicked: boolean = false;
 
   constructor(
@@ -33,8 +32,9 @@ export class BuyTicketComponent implements OnInit {
     this.route.queryParams.subscribe(
       params => {
         const journeyId = params['journeyId'];
-        this.journeyId = journeyId;
-        this.connection$ = this.searchService.getJourney(journeyId);
+        this.searchService.getJourney(journeyId).subscribe(
+          journey => this.journey = journey
+        );
       }
     );
 
@@ -48,7 +48,7 @@ export class BuyTicketComponent implements OnInit {
 
   buyTicket() {
     this.clicked = true;
-    this.ticketService.buyTicket(this.journeyId, this.firstName, this.lastName).subscribe(
+    this.ticketService.buyTicket(this.journey.id, this.firstName, this.lastName).subscribe(
       _ => this.router.navigate(['ticket-purchased'])
     )
   }
