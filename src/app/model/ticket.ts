@@ -5,4 +5,5 @@ export interface Ticket {
   lastName: string;
   seatNumber: number;
   journey: Journey;
+  qr: string;
 }

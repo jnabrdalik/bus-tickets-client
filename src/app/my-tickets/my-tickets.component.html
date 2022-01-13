@@ -2,6 +2,9 @@
 <mat-spinner *ngIf="!loaded"></mat-spinner>
 
   <div *ngFor="let ticket of tickets">
+    <div>
+      <img [src]="ticket.qr" width="200px">
+    </div>
     <div class="row">{{ticket.firstName}}  {{ticket.lastName}}</div>    
       <div class="t-container">
         <div class="row date">

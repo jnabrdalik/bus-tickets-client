@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { forkJoin, map, mergeMap, Observable } from 'rxjs';
+import { forkJoin, map, mergeMap, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Ticket } from './model/ticket';
 import { SearchService } from './search.service';
@@ -35,7 +35,8 @@ export class TicketService {
         firstName: t.person_name,
         lastName: t.person_surname,
         seatNumber: t.seat_number,
-        journey: t.journey
+        journey: t.journey,
+        qr: t.qr_code_url
       }))),
     )    
   }
